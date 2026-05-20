@@ -4,17 +4,21 @@ import Auth  from './pages/Auth';
 import Checkout  from './pages/Checkout';
 import Navbar from './Components/Navbar';
 import './App.css';
+import AuthProvider from './context/AuthContext';
 
 function App() {
   return (
+    <AuthProvider>
     <div className="App">
-    <Navbar/>
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/auth" element={<Auth />} />
-      <Route path="/checkout" element={<Checkout />} />
-    </Routes>
-  </div>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/auth" element={<Auth />} />
+        <Route path="/auth/signup" element={<Auth />} />
+        <Route path="/checkout" element={<Checkout />} />
+      </Routes>
+    </div>
+    </AuthProvider>
   );
 }
 
