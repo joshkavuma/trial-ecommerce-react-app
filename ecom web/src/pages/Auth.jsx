@@ -44,7 +44,7 @@ export default function Auth() {
             {error && <div className="error-message">{error}</div>}
             <div className="form-group">
               <label className="form-label" htmlFor="email">
-                Email
+                Email  
               </label>
               <input
                 className="form-input"

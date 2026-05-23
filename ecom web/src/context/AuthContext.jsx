@@ -1,10 +1,6 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useState, useContext } from "react";
 
-export const AuthContext = createContext(null);
-
-export function useAuth() {
-  return useContext(AuthContext);
-}
+const AuthContext = createContext(null);
 
 export default function AuthProvider({ children }) {
   const [user, setUser] = useState(
@@ -26,13 +22,15 @@ export default function AuthProvider({ children }) {
 
     setUser({ email });
 
-    return { success: true, message: "User registered successfully" };
+    return { success: true };
   }
 
   function login(email, password) {
-    const users = JSON.parse(localStorage.getItem('users') || []);
-    const user = users.find((u) => u.email ===email && u.password === password);
-    
+    const users = JSON.parse(localStorage.getItem("users") || "[]");
+    const user = users.find(
+      (u) => u.email === email && u.password === password
+    );
+
     if (!user) {
       return { success: false, error: "Invalid email or password" };
     }
@@ -40,7 +38,7 @@ export default function AuthProvider({ children }) {
     localStorage.setItem("currentUserEmail", email);
     setUser({ email });
 
-    return { success: true,};  
+    return { success: true };
   }
 
   function logout() {
@@ -49,8 +47,14 @@ export default function AuthProvider({ children }) {
   }
 
   return (
-    <AuthContext.Provider value={{signUp, user, logout, login}}>
+    <AuthContext.Provider value={{ signUp, user, logout, login }}>
       {children}
     </AuthContext.Provider>
   );
- }
+}
+
+export function useAuth() {
+  const context = useContext(AuthContext);
+
+  return context;
+}
